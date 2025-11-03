@@ -20,7 +20,6 @@ def getfolderpath(type):
     return folder_path
 
 def getfiles(type):
-    # 1. 初始化 Tk 視窗（不顯示主視窗）
     root = tk.Tk()
     root.withdraw()
     if type == 1:
@@ -29,13 +28,12 @@ def getfiles(type):
         ftype = ("text files", "*.txt")
     elif type == 3:
         ftype = ("all files", "*.*")
-    # 2. 彈出檔案選擇對話框
     file_path = filedialog.askopenfilename(
         title="請選擇檔案",
         filetypes=[ftype],
     )
     if not file_path:
-        print("未選取任何檔案，結束程式。")
+        print("未選取任何檔案!")
         return
     return file_path
 
@@ -52,13 +50,10 @@ def get_excel_fieldslist(path, *cols):
     missing_cols = [c for c in cols if c not in df.columns]
     if missing_cols:
         raise KeyError(f"欄位不存在: {missing_cols}")    
-    selected = df[list(cols)] # dataframe結構
-    values = selected.values  # numpy結構
+    selected = df[list(cols)]
+    values = selected.values  
     return values
 
-#（索引從0起算，所以第 i 列第 j 欄 → df.iloc[i-1, j-1]）
-# cols 是 tuple，例如 ("零件名稱", "加工方法", "數量")
-# 測試
 cols = ["零件名稱", "加工方法"]  # 欄位可自由增減
 bom_path = getfiles(1)
 folder_path = getfolderpath(2)
@@ -88,4 +83,5 @@ for i in df:
                 print(name + "是未知類別")
                 continue
         else:
+
             continue
